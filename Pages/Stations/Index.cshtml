@@ -1,0 +1,52 @@
+﻿@page
+@model FloodingApp.Pages.Stations.IndexModel
+@{
+    ViewData["Title"] = "Stations";
+}
+
+<h2>Stations</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Flood Warning Value</th>
+            <th>Drought Warning Value</th>
+            <th>Current Level</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Stations)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>@item.FloodWarningValue</td>
+                <td>@item.DroughtWarningValue</td>
+                <td style="background-color: @(item.Values != null && item.Values.Any() ?
+                            (item.Values.OrderByDescending(v => v.TimeStamp).FirstOrDefault()?.MeasurementValue ?? 0) >= item.FloodWarningValue ? "red" :
+                            (item.Values.OrderByDescending(v => v.TimeStamp).FirstOrDefault()?.MeasurementValue ?? 0) <= item.DroughtWarningValue ? "orange" : "white" : "white");">
+                    @{
+                        var currentLevel = 0;
+                        if (item.Values != null && item.Values.Any())
+                        {
+                            var lastValue = item.Values.OrderByDescending(v => v.TimeStamp).FirstOrDefault();
+                            if (lastValue != null)
+                            {
+                                currentLevel = lastValue.MeasurementValue;
+                            }
+                        }
+                    }
+                    @currentLevel
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a>
+                    <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-secondary">Details</a>
+                    <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-page="./Create" class="btn btn-success">Create New Station</a>

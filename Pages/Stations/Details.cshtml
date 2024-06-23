@@ -1,0 +1,86 @@
+﻿@page "{id:int}"
+@model FloodingApp.Pages.Stations.DetailsModel
+@{
+    ViewData["Title"] = "Station Details";
+}
+
+<h1>Station Details</h1>
+
+<div>
+    <h4>Station</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Title
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Station.Title
+        </dd>
+        <dt class="col-sm-2">
+            Flood Warning Value
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Station.FloodWarningValue
+        </dd>
+        <dt class="col-sm-2">
+            Drought Warning Value
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Station.DroughtWarningValue
+        </dd>
+        <dt class="col-sm-2">
+            Current Level
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                var currentLevel = 0;
+                if (Model.Station.Values != null && Model.Station.Values.Any())
+                {
+                    var lastValue = Model.Station.Values.OrderByDescending(v => v.TimeStamp).FirstOrDefault();
+                    if (lastValue != null)
+                    {
+                        currentLevel = lastValue.MeasurementValue;
+                    }
+                }
+                @currentLevel
+            }
+        </dd>
+    </dl>
+</div>
+
+<h2>Measurement History (Last 5 Measurements)</h2>
+<canvas id="measurementChart" width="400" height="200"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/min/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@1.0.0"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const ctx = document.getElementById('measurementChart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Station.Values.OrderByDescending(v => v.TimeStamp).Take(5).Select(v => v.TimeStamp.ToString("yyyy-MM-dd HH:mm:ss")))),
+                datasets: [{
+                    label: 'Measurement Value',
+                    data: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Station.Values.OrderByDescending(v => v.TimeStamp).Take(5).Select(v => v.MeasurementValue))),
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'minute'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+</script>
