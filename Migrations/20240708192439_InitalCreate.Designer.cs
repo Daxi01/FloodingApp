@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FloodingApp.Migrations
 {
     [DbContext(typeof(FloodMonitoringContext))]
-    [Migration("20240623115622_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240708192439_InitalCreate")]
+    partial class InitalCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

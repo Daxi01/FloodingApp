@@ -29,4 +29,28 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function (event) {
+                const floodWarningValue = parseFloat(document.querySelector('[name="Station.FloodWarningValue"]').value);
+                const droughtWarningValue = parseFloat(document.querySelector('[name="Station.DroughtWarningValue"]').value);
+                let valid = true;
+
+                if (floodWarningValue < 1 || floodWarningValue > 10) {
+                    valid = false;
+                    alert("Flood Warning Value must be between 1 and 10.");
+                }
+
+                if (droughtWarningValue < 1 || droughtWarningValue > 10) {
+                    valid = false;
+                    alert("Drought Warning Value must be between 1 and 10.");
+                }
+
+                if (!valid) {
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
 }

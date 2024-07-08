@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FloodingApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+023d8afeed0e5e33c36a5e18c176058785c500b7")]
 [assembly: System.Reflection.AssemblyProductAttribute("FloodingApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FloodingApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

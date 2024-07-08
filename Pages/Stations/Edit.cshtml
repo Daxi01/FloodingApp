@@ -1,13 +1,9 @@
-﻿@page "{id:int}"
+﻿@page
 @model FloodingApp.Pages.Stations.EditModel
-@{
-    ViewData["Title"] = "Edit Station";
-}
 
 <h2>Edit Station</h2>
 
 <form method="post" class="mt-3">
-    <input type="hidden" asp-for="Station.Id" /> 
     <div class="form-group">
         <label asp-for="Station.Title"></label>
         <input asp-for="Station.Title" class="form-control" />
@@ -28,10 +24,33 @@
         <input asp-for="Station.TimeToleranceInMin" class="form-control" />
         <span asp-validation-for="Station.TimeToleranceInMin" class="text-danger"></span>
     </div>
-    <input type="hidden" asp-for="Station.CreatedByUser" value="system" /> 
     <button type="submit" class="btn btn-primary">Save</button>
 </form>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function (event) {
+                const floodWarningValue = parseFloat(document.querySelector('[name="Station.FloodWarningValue"]').value);
+                const droughtWarningValue = parseFloat(document.querySelector('[name="Station.DroughtWarningValue"]').value);
+                let valid = true;
+
+                if (floodWarningValue < 1 || floodWarningValue > 10) {
+                    valid = false;
+                    alert("Flood Warning Value must be between 1 and 10.");
+                }
+
+                if (droughtWarningValue < 1 || droughtWarningValue > 10) {
+                    valid = false;
+                    alert("Drought Warning Value must be between 1 and 10.");
+                }
+
+                if (!valid) {
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
 }

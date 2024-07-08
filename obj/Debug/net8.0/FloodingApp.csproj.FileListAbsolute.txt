@@ -146,3 +146,4 @@ C:\Users\daxi0\source\repos\FloodingApp\FloodingApp\obj\Debug\net8.0\FloodingApp
 C:\Users\daxi0\source\repos\FloodingApp\FloodingApp\obj\Debug\net8.0\FloodingApp.genruntimeconfig.cache
 C:\Users\daxi0\source\repos\FloodingApp\FloodingApp\obj\Debug\net8.0\ref\FloodingApp.dll
 C:\Users\daxi0\source\repos\FloodingApp\FloodingApp\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\daxi0\source\repos\FloodingApp\FloodingApp\obj\Debug\net8.0\FloodingApp.sourcelink.json
